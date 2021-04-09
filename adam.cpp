@@ -2,58 +2,64 @@
 
 class Employee{
     private:
-    std::string *EmployeeName = new std::string[3];
-    int *age = new int[3];
-    std::string *department = new std::string[3];
-    int *basicSalary = new int[3];
-    int *incomeTax = new int[3];
+    std::string EmployeeName;
+    int age;
+    std::string department;
+    int basicSalary;
+    int cnicNo;
+    int incomeTax;
 
     public:
 
     //Set Functions
-    void setName(std::string *EmpName, int index)
+    void setName(std::string EmpName)
     {
-        *(EmployeeName + index) = *(EmpName + index);
+        EmployeeName = EmpName;
     }
-    void setAge(int *EmpAge, int index)
+    void setAge(int EmpAge)
     {
-        *(age + index) = *(EmpAge + index);
+        age = EmpAge;
     }
-    void setDept(std::string *dept, int index)
+    void setDept(std::string dept)
     {
-        *(department + index) = *(dept + index);
+        department = dept;
     }
-    void setSalary(int *EmpSalary, int index)
+    void setCnic(int empCnic)
     {
-        *(basicSalary + index) = *(EmpSalary +index);
+        cnicNo = empCnic;
     }
-    void setTax(int *EmpTax, int index)
+    void setSalary(int EmpSalary)
     {
-        *(incomeTax + index) = *(EmpTax + index);
+        basicSalary = EmpSalary;
+    }
+    void setTax(int EmpTax)
+    {
+        incomeTax = EmpTax;
     }
 
     //Get Functions
-    std::string getName(int index) const{
-        return *(EmployeeName + index);
+    std::string getName() const{
+        return EmployeeName;
     }
-    int getAge(int index) const{
-        return *(age + index);
+    int getAge() const{
+        return age;
     }
-    std::string getDepartment(int index) const{
-        return *(department + index);
+    std::string getDepartment() const{
+        return department;
     }
-    int getSalary(int index) const{
-        return *(basicSalary + index);
+    int getSalary() const{
+        return basicSalary;
     }
-    int getTax(int index) const{
-        return *(incomeTax + index);
+    int getCnic() const{
+        return cnicNo;
+    }
+    int getTax() const{
+        return incomeTax;
     }
 
     //Helping Functions
     void InputOfData();
     void OutputOfData();
-    void Search();
-    void salarySearch();
 };
 
 void Employee::InputOfData(){
@@ -62,38 +68,130 @@ void Employee::InputOfData(){
     std::string departmentEmp;
     int basicSalaryEmp;
     int incomeTaxEmp;
+    int cnicEmp;
 
-    int index = 0;
     std::cout << "Enter Employee Name : ";
     std::cin >> EmpName;
-    setName(&EmpName, index);
+    setName(EmpName);
     std::cout << "Enter Employee Age : ";
     std::cin >> ageEmp;
-    setAge(&ageEmp, index);
+    setAge(ageEmp);
     std::cout << "Enter Employee Department : ";
     std::cin >> departmentEmp;
-    setDept(&departmentEmp, index);
+    setDept(departmentEmp);
+    std::cout << "Enter CNIC Number : ";
+    std::cin >> cnicEmp;
+    setCnic(cnicEmp);
     std::cout << "Enter Employee Salary : ";
     std::cin >> basicSalaryEmp;
-    setSalary(&basicSalaryEmp, index);
+    setSalary(basicSalaryEmp);
     std::cout << "Enter Employee Tax : ";
     std::cin >> incomeTaxEmp;
-    setTax(&incomeTaxEmp, index);
-    index++;
+    setTax(incomeTaxEmp);
 }
 
 void Employee::OutputOfData(){
-    int index = 0;
-    std::cout << "Name : " << getName(index) << std::endl;
-    std::cout << "Age : " << getAge(index) << std::endl;
-    std::cout << "Department : " << getDepartment(index) << std::endl;
-    std::cout << "Salary : " << getSalary(index) << std::endl;
-    std::cout << "Tax : " << getTax(index) << std::endl;
+    std::cout << "Name : " << getName() << std::endl;
+    std::cout << "Age : " << getAge() << std::endl;
+    std::cout << "Department : " << getDepartment() << std::endl;
+    std::cout << "Salary : " << getSalary() << std::endl;
+    std::cout << "Tax : " << getTax() << std::endl;
 }
+
+// void Employee::Search()
+// {
+//     int tempCnic;
+//     int tempIndex;
+//     std::cout << "Please Enter Cnic to search : ";
+//     std::cin >> tempCnic;
+
+//     for (int i = 0; i < 3; i++)
+//     {
+//         if(tempCnic == cnicNo)
+//         {
+//             tempIndex = i;
+//             break;
+//         }
+//     }
+//     OutputOfData();
+//}
 
 int main()
 {
-    Employee emp;
-    emp.InputOfData();
-    emp.OutputOfData();
+    int index = 0;
+    Employee emp[3];
+    for (int i = 0; i < 3; i++)
+    {
+        std::cout << "Enter Data of Employee " << i << " : \n";
+        emp[i].InputOfData();
+    }
+    
+    int menuChoice;
+    bool isRunning = true;
+
+    while (isRunning)
+    {
+        menu:
+        std::cout << "1. Show Detail of all Employees\n";
+        std::cout << "2. Search an Employee\n";
+        std::cout << "3. Print Total Salary\n";
+        std::cout << "4. To Exit\n";
+        std::cout << "---------------------\n";
+        std::cout << "Enter your Choice : ";
+        std::cin >> menuChoice;
+
+        if(menuChoice == 1)
+        {
+            system("cls");
+            for (int i = 0; i < 3; i++)
+            {
+                emp[i].OutputOfData();
+                std::cout << "-------------" << std::endl;
+            }
+            goto menu;
+        }
+        else if(menuChoice == 2)
+        {
+            int tempCnic;
+            
+            std::cout << "Enter Cnic No. : ";
+            std::cin >> tempCnic;
+
+            for (int i = 0; i < 3; i++)
+            {
+                if(emp[i].getCnic() == tempCnic)
+                {
+                    index = i;
+                }
+            }
+            emp[index].OutputOfData();
+            goto menu;
+        }
+        else if(menuChoice == 3)
+        {
+            int tempCnic;
+            int index = 0;
+            int salary;
+            std::cout << "Enter Cnic No. : ";
+            std::cin >> tempCnic;
+
+            for (int i = 0; i < 3; i++)
+            {
+                if(emp[i].getCnic() == tempCnic)
+                {
+                    index = i;
+                    break;
+                }
+            }
+            salary = emp[index].getSalary() - emp[index].getTax();
+            std::cout << "Salary = " << salary << std::endl;
+            goto menu;
+        }
+        else if (menuChoice == 4)
+        {
+            std::cout << "Closing the Program\n";
+            isRunning = false;
+        }
+    }
+    
 }
